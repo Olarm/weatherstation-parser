@@ -53,7 +53,7 @@ def wind(df, fig, gs):
     direction *= 22.5
     direction = direction.apply(math.radians)
 
-    W_E = direction.apply(math.sin).values
+    W_E = - direction.apply(math.sin).values
     W_N = direction.apply(math.cos).values
 
     ax3 = fig.add_subplot(gs[2,:])
