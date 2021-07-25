@@ -48,7 +48,7 @@ def plot_data():
     ax2.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
 
     ax22 = ax2.twinx()
-    ax22.set_ylabel("Regn", color="tab:red")
+    ax22.set_ylabel("Regn [mm]", color="tab:red")
     ax22.plot(df.timestamp, df.R_hour, color="tab:red")
     ax22.tick_params(axis="y", colors="tab:red")
     ax22.yaxis.set_label_position("right")
