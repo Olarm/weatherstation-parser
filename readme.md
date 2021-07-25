@@ -10,3 +10,7 @@ Navigate to project root and create virtual environment
 Active the virtual environment from the project root
     
     source .weather_parser/bin/activate
+
+Install requirements
+    
+    pip3 install -r requirements.txt
