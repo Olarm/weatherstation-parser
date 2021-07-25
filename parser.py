@@ -1,3 +1,5 @@
+#!/opt/weatherstation-parser/.weather_parser/bin/python3
+
 import os
 import socket
 import math
