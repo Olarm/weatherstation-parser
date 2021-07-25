@@ -54,7 +54,7 @@ def wind(df, fig, gs):
     direction = direction.apply(math.radians)
 
     W_E = - direction.apply(math.sin).values
-    W_N = direction.apply(math.cos).values
+    W_N = - direction.apply(math.cos).values
 
     ax3 = fig.add_subplot(gs[2,:])
     ax3.quiver(W_E, W_N)#, scale=1, scale_units="height")
