@@ -54,6 +54,7 @@ def plot_data():
     ax22.plot(df.timestamp, df.P_abs, color="tab:red")
     ax22.tick_params(axis="y", colors="tab:red")
     ax22.yaxis.set_label_position("right")
+    ax22.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
 
     wind(hour_avg, fig, gs)
     gs.update(wspace=0, hspace=0.1)
