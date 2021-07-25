@@ -41,7 +41,11 @@ def plot_data():
     wind(hour_avg, fig, gs)
     gs.update(wspace=0, hspace=0.1)
 
-    plt.savefig("today.png")
+    hostname = socket.gethostname()
+    if hostname == "Roma":
+        plt.savefig("/opt/homeassistant/weather/today.png")
+    else:
+        plt.savefig("today.png")
 
 
 def wind(df, fig, gs):
