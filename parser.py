@@ -22,8 +22,8 @@ def plot_data():
     df.timestamp = pd.to_datetime(df.timestamp, format="%Y-%m-%d %X")
     hour_avg = df.groupby([df.timestamp.dt.hour]).mean()
 
-    fig = plt.figure(figsize=(8,5))
-    gs = gridspec.GridSpec(3, 1, height_ratios=[2, 2, 1])
+    fig = plt.figure(figsize=(8,8))
+    gs = gridspec.GridSpec(4, 1, height_ratios=[2, 2, 2, 1])
 
     ax1 = fig.add_subplot(gs[0,:])
     ax1.plot(df.timestamp, df.T_out, color="tab:blue")
@@ -34,27 +34,34 @@ def plot_data():
     ax1.grid()
 
     ax12 = ax1.twinx()
-    ax12.set_ylabel("Luftfuktighet [%]", color="tab:red")
-    ax12.plot(df.timestamp, df.H_out, color="tab:red")
-    ax12.yaxis.set_label_position("right")
+    ax12.set_ylabel("Trykk [hPa]", color="tab:red")
+    ax12.plot(df.timestamp, df.P_abs, color="tab:red")
     ax12.tick_params(axis="y", colors="tab:red")
+    ax12.yaxis.set_label_position("right")
+    ax12.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
 
     ax2 = fig.add_subplot(gs[1,:])
-    ax2.plot(df.timestamp, df.W_avg, color="tab:blue", label="Vind gj.")
-    ax2.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
-    ax2.set_ylabel("Vindstyrke [m/s]", color="tab:blue")
+    ax2.set_ylabel("Luftfuktighet [%]", color="tab:blue")
+    ax2.plot(df.timestamp, df.H_out, color="tab:blue")
     ax2.tick_params(axis="y", colors="tab:blue")
-    #ax2.scatter(df.timestamp, df.W_gust, color="black", s=1.5, label="Vindkast")
-    ax2.plot(df.timestamp, df.W_gust, ":", label="Vindkast", color="tab:blue")
-    #ax2.legend()
-    ax2.grid()
+    ax2.tick_params(bottom=False, labelbottom=False)
+    ax2.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
 
     ax22 = ax2.twinx()
-    ax22.set_ylabel("Trykk [hPa]", color="tab:red")
-    ax22.plot(df.timestamp, df.P_abs, color="tab:red")
+    ax22.set_ylabel("Regn", color="tab:red")
+    ax22.plot(df.timestamp, df.R_hour, color="tab:red")
     ax22.tick_params(axis="y", colors="tab:red")
     ax22.yaxis.set_label_position("right")
     ax22.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
+
+    ax3 = fig.add_subplot(gs[2,:])
+    ax3.plot(df.timestamp, df.W_avg, color="tab:blue", label="Vind gj.")
+    ax3.xaxis.set_major_formatter(dates.DateFormatter('%H:%M'))
+    ax3.set_ylabel("Vindstyrke [m/s]", color="tab:blue")
+    ax3.tick_params(axis="y", colors="tab:blue")
+    ax3.plot(df.timestamp, df.W_gust, ":", label="Vindkast", color="tab:blue")
+    ax3.grid()
+
 
     wind(hour_avg, fig, gs)
     gs.update(wspace=0, hspace=0.1)
@@ -74,7 +81,7 @@ def wind(df, fig, gs):
     W_E = - direction.apply(math.sin).values
     W_N = - direction.apply(math.cos).values
 
-    ax3 = fig.add_subplot(gs[2,:])
+    ax3 = fig.add_subplot(gs[3,:])
     ax3.quiver(W_E, W_N)#, scale=1, scale_units="height")
     ax3.axis("off")
     ax3.set_ylim([-1, 1])
