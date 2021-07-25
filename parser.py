@@ -1,6 +1,7 @@
 import os
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as dates
 
@@ -28,6 +29,17 @@ def plot_data():
     axs[1].legend()
 
     plt.savefig("today.png")
+
+
+def wind(df):
+    direction = df.W_dir.astype(float)
+    direction *= 22.5
+    direction = direction.apply(math.radians)
+
+    W_E = direction.apply(math.sin).values
+    W_N = direction.apply(math.cos).values
+
+    W_vecs = np.stack((W_E, W_N), axis=-1)
 
 
 
